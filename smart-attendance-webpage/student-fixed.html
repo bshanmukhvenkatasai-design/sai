@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Dashboard - Smart Attendance Pro</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='45' fill='%23ffffff' stroke='%23222222' stroke-width='5'/><text x='50' y='55' font-size='24' text-anchor='middle' fill='%23000000' font-weight='bold'>SA</text></svg>">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&amp;display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="student-dashboard" class="page">
+        <div class="dashboard-header">
+            <button onclick="window.location.href='login.html'" class="back-btn">< Back to Login</button>
+            <h1 id="student-name">Loading...</h1>
+        </div>
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-number" id="overall-percent">0%</div>
+                <div>Overall Attendance</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="total-periods">0</div>
+                <div>Total Periods</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="present-count">0</div>
+                <div>Present</div>
+            </div>
+        </div>
+        <div class="timetable-container">
+            <h3>Period-wise Timetable & Attendance</h3>
+            <table id="timetable-table">
+                <thead>
+                    <tr>
+                        <th>Period</th>
+                        <th>Time</th>
+                        <th>Subject</th>
+                        <th>Attendance %</th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        <div class="calendar-container">
+            <h3>Attendance Calendar (Current Month)</h3>
+            <div class="calendar-nav">
+                <button id="prev-month"><</button>
+                <span id="month-year"></span>
+                <button id="next-month">></button>
+            </div>
+            <div id="calendar-grid" class="calendar-grid">
+                <!-- Days grid -->
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const studentId = urlParams.get('student');
+            if (!studentId) {
+                window.location.href = 'login.html';
+                return;
+            }
+            document.getElementById('student-name').textContent = `${studentId.toUpperCase()} Dashboard`;
+            if (typeof renderAttendanceTable === 'function') {
+                renderAttendanceTable(studentId);
+            }
+        });
+    </script>
+</body>
+</html>
